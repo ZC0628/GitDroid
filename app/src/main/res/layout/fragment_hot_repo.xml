@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--ViewPager上主要设置的标题
+    设置移动到标题下方时线体的颜色： app:tabIndicatorColor="@android:color/white"
+    设置标题显示的样式：app:tabTextAppearance="@style/AppTheme.TabTextAppearance"
+    设置选中标题时文字的颜色：app:tabSelectedTextColor="@android:color/white"-->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="?attr/colorPrimary"
+        app:tabIndicatorColor="@android:color/white"
+        app:tabTextAppearance="@style/AppTheme.TabTextAppearance"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabMode="scrollable"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
