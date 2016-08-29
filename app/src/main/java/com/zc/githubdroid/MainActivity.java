@@ -1,9 +1,7 @@
 package com.zc.githubdroid;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,13 +10,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
+import com.zc.githubdroid.github.hotrepo.HotRepoFragment;
+import com.zc.githubdroid.github.hotuser.HotUserFragment;
+import com.zc.githubdroid.login.model.UserRepo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ *      主页面
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     @BindView(R.id.drawerLayout)
@@ -30,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // 热门仓库Fragment
     private HotRepoFragment hotRepoFragment;
     private HotUserFragment hotUserFragment;
+    private Button btLogin;//登录按钮
+    private ImageView ivIcon;//用户的头像
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-
     @Override public void onContentChanged() {
         super.onContentChanged();
         ButterKnife.bind(this);
@@ -65,9 +72,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 设置抽屉监听
         drawerLayout.addDrawerListener(toggle);
 
+        //得到NavigationView里面头布局的控件
+         // 第一个位置是：头布局
+        btLogin = ButterKnife.findById(navigationView.getHeaderView(0), R.id.btnLogin);
+        ivIcon = ButterKnife.findById(navigationView.getHeaderView(0), R.id.ivIcon);
+
         // 默认显示的是热门仓库fragment
         hotRepoFragment = new HotRepoFragment();
         replaceFragment(hotRepoFragment);
+    }
+
+    //主要做了我们基本登录信息的改变
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(UserRepo.isEmpty()){//空的
+            btLogin.setText(R.string.login_github);
+            return;
+        }
+        //有的话
+        btLogin.setText(R.string.switch_account);
+        //设置主页面的标题
+        getSupportActionBar().setTitle(UserRepo.getUser().getName());
+        //设置用户头像  用picasso获取图片路径
+        Picasso.with(this).load(UserRepo.getUser().getAvatar());
+
+
     }
 
     private void replaceFragment(Fragment fragment) {

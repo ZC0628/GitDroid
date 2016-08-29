@@ -1,9 +1,9 @@
-package com.zc.githubdroid;
+package com.zc.githubdroid.github.hotrepo.repolist;
 
 import android.os.AsyncTask;
 
-
 import com.zc.githubdroid.commons.LogUtils;
+import com.zc.githubdroid.github.hotrepo.repolist.view.RepoListView;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.zc.githubdroid;
+package com.zc.githubdroid.github.hotrepo;
 
 
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.zc.githubdroid.R;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.zc.githubdroid;
+package com.zc.githubdroid.github.hotrepo.repolist;
 
 
 import android.os.Bundle;
@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
+import com.zc.githubdroid.R;
 import com.zc.githubdroid.commons.LogUtils;
 import com.zc.githubdroid.components.FooterView;
+import com.zc.githubdroid.github.hotrepo.repolist.view.RepoListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +32,11 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
  * 业务类：主要完成数据加载，通知视图改变
  *  TalLayout标题下的Listview
  */
-public class HotRepoListFragment extends Fragment implements RepoListView{
+public class HotRepoListFragment extends Fragment implements RepoListView {
 
 
     @BindView(R.id.lvRepos) ListView lvRepos;
-    @BindView(R.id.ptrClassicFrameLayout)
-    PtrClassicFrameLayout ptrFrameLayout;//下拉刷新
+    @BindView(R.id.ptrClassicFrameLayout) PtrClassicFrameLayout ptrFrameLayout;//下拉刷新
     @BindView(R.id.emptyView) TextView emptyView;//空的页面
     @BindView(R.id.errorView) TextView errorView;//加载错误、网络加载失败
 
@@ -93,7 +94,7 @@ public class HotRepoListFragment extends Fragment implements RepoListView{
         footerView = new FooterView(getContext());
 
         /**
-         * 实现上拉加载监听
+         * 实现上拉加载监听  Mugen
          */
         Mugen.with(lvRepos, new MugenCallbacks() {
             //当Listview滑动到最后的时候，触发这个方法进行加载
@@ -107,14 +108,14 @@ public class HotRepoListFragment extends Fragment implements RepoListView{
             }
 
 
-            //是否正在加载
+            //是否正在加载，是否将尾部布局添加到Listview上
             @Override
             public boolean isLoading() {
                 LogUtils.i("5");
                 return lvRepos.getFooterViewsCount() > 0 && footerView.isLoading();
             }
 
-            //是不是加载完成的数据
+            //是不是加载完成的数据，是否将尾部布局添加到Listview上
             @Override
             public boolean hasLoadedAllItems() {
                 LogUtils.i("6");

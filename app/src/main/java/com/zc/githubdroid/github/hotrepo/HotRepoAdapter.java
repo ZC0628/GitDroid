@@ -1,8 +1,10 @@
-package com.zc.githubdroid;
+package com.zc.githubdroid.github.hotrepo;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.zc.githubdroid.github.hotrepo.repolist.HotRepoListFragment;
 
 /**
  *

@@ -1,4 +1,4 @@
-package com.zc.githubdroid;
+package com.zc.githubdroid.github.hotrepo.repolist.view;
 
 import java.util.List;
 
