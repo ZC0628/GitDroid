@@ -1,5 +1,7 @@
 package com.zc.githubdroid.github.hotrepo.repolist.view;
 
+import com.zc.githubdroid.github.hotrepo.repolist.model.Repo;
+
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ public interface RepoLoadView {
      void showLoadError(String msg);
 
     //    4.加载完成，拿到数据进行视图更新
-     void addLoadDota(List<String> list);//将数据传过来
+     void addLoadDota(List<Repo> list);//将数据传过来
 
 
 }

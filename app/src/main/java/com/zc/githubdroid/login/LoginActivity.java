@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView{
         activityUtils = new ActivityUtils(this);
 
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);//绑定
+//        ButterKnife.bind(this);//绑定
     }
 
     @Override
@@ -140,4 +140,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView{
     public void resetWebView() {
             initWebView();
     }
+
+
+
 }

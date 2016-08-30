@@ -1,14 +1,17 @@
 package com.zc.githubdroid.network;
 
+import com.zc.githubdroid.github.hotrepo.repolist.model.RepoResult;
 import com.zc.githubdroid.login.model.AccessToken;
 import com.zc.githubdroid.login.model.User;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  *
@@ -47,5 +50,41 @@ public interface GithubApi {
      */
     @GET("user")
     Call<User> getUser();
+
+
+
+    /**
+     * 获取仓库列表的请求Api
+     *
+     * @param query  查询的参数--体现为语言
+     * @param pageId 查询页数--从1开始
+     * @return
+     */
+    @GET("/search/repositories")
+    Call<RepoResult> searchRepos(
+            @Query("q") String query,
+            @Query("page") int pageId);
+
+
+    /**
+     * 获取readme
+     * @param owner 仓库拥有者
+     * @param repo 仓库名称
+     * @return
+     */
+    /*@GET("/repos/{owner}/{repo}/readme")
+    Call<RepoContentResult> getReadme(@Path("owner") String owner,
+                                      @Path("repo") String repo);
+
+    *//**
+     * 获取MarkDown文件内容，内容以HTML形式展示出来
+     * @param body
+     * @return
+     *//*
+    @Headers({"Content-Type:text/plain"})
+    @POST("/markdown/raw")
+    Call<ResponseBody> markDown(@Body RequestBody body);*/
+
+
 
 }

@@ -45,7 +45,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    //
+    //流转换成字符串
     compile 'commons-io:commons-io:2.4'
     compile 'com.j256.ormlite:ormlite-core:5.0'
     compile 'com.j256.ormlite:ormlite-android:5.0'
@@ -55,4 +55,6 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     //图片加载框架
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'commons-io:commons-io:20030203.000550'
 }

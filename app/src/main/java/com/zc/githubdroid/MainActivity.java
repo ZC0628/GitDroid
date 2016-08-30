@@ -11,12 +11,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
+import com.zc.githubdroid.commons.ActivityUtils;
 import com.zc.githubdroid.github.hotrepo.HotRepoFragment;
 import com.zc.githubdroid.github.hotuser.HotUserFragment;
+import com.zc.githubdroid.login.LoginActivity;
 import com.zc.githubdroid.login.model.UserRepo;
 
 import butterknife.BindView;
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private HotUserFragment hotUserFragment;
     private Button btLogin;//登录按钮
     private ImageView ivIcon;//用户的头像
+    private ActivityUtils activityUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override public void onContentChanged() {
         super.onContentChanged();
         ButterKnife.bind(this);
+        activityUtils = new ActivityUtils(this);
         // ActionBar处理
         setSupportActionBar(toolbar);
         // 设置navigationView的监听器
@@ -76,6 +82,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          // 第一个位置是：头布局
         btLogin = ButterKnife.findById(navigationView.getHeaderView(0), R.id.btnLogin);
         ivIcon = ButterKnife.findById(navigationView.getHeaderView(0), R.id.ivIcon);
+
+        //点击 切换账号 跳转到注册界面
+        btLogin.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                activityUtils.startActivity(LoginActivity.class);
+                finish();
+            }
+        });
 
         // 默认显示的是热门仓库fragment
         hotRepoFragment = new HotRepoFragment();
@@ -94,11 +108,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         btLogin.setText(R.string.switch_account);
         //设置主页面的标题
         getSupportActionBar().setTitle(UserRepo.getUser().getName());
+
         //设置用户头像  用picasso获取图片路径
-        Picasso.with(this).load(UserRepo.getUser().getAvatar());
-
-
+        Picasso.with(this).load(UserRepo.getUser().getAvatar()).into(ivIcon);
+//        ImageLoader.getInstance().displayImage(UserRepo.getUser().getAvatar(),ivIcon);
     }
+
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

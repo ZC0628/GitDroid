@@ -48,7 +48,7 @@ public class HotRepoFragment extends Fragment {
         viewPager = (ViewPager) view.findViewById(R.id.viewPager);
         tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
 
-        adapter = new HotRepoAdapter(getChildFragmentManager());//获取FragmentManager
+        adapter = new HotRepoAdapter(getChildFragmentManager(),getContext());//获取FragmentManager
         viewPager.setAdapter(adapter);
         //TabLayout会跟着ViewPager进行显示
         tabLayout.setupWithViewPager(viewPager);

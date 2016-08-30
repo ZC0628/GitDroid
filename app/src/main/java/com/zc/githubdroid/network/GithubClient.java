@@ -1,14 +1,17 @@
 package com.zc.githubdroid.network;
 
 
+import com.zc.githubdroid.github.hotrepo.repolist.model.RepoResult;
 import com.zc.githubdroid.login.model.AccessToken;
 import com.zc.githubdroid.login.model.User;
 
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
+import retrofit2.http.Query;
 
 /**
  *
@@ -58,4 +61,22 @@ public class GithubClient implements GithubApi{
     @Override public Call<User> getUser() {
         return githubApi.getUser();
     }
+
+
+    @Override
+    public Call<RepoResult> searchRepos(@Query("q") String query, @Query("page") int pageId) {
+        return githubApi.searchRepos(query,pageId);
+    }
+
+   /* @Override
+    public Call<RepoContentResult> getReadme(String owner, String repo) {
+        return null;
+    }
+
+    @Override
+    public Call<ResponseBody> markDown(RequestBody body) {
+        return null;
+    }*/
+
+
 }

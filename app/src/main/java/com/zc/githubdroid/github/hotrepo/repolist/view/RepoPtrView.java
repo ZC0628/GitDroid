@@ -1,5 +1,7 @@
 package com.zc.githubdroid.github.hotrepo.repolist.view;
 
+import com.zc.githubdroid.github.hotrepo.repolist.model.Repo;
+
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ public interface RepoPtrView {
      */
 
 //    拿到刷新得到数据
-    void refreshData(List<String> list);
+    void refreshData(List<Repo> list);
 
 //    显示刷新的视图
     void showContentView();
@@ -30,4 +32,8 @@ public interface RepoPtrView {
 
 //  加载错误、网络加载失败
     void showErrorView(String errormsg);
+
+    //弹出吐司
+    void showMessage(String msg);
+
 }

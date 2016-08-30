@@ -59,4 +59,9 @@ public class User implements Serializable{
                 ", avatar='" + avatar + '\'' +
                 '}';
     }
+
+
+
+
+
 }

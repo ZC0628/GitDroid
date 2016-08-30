@@ -12,9 +12,12 @@ import android.widget.TextView;
 
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
+import com.zc.githubdroid.Language;
 import com.zc.githubdroid.R;
+import com.zc.githubdroid.commons.ActivityUtils;
 import com.zc.githubdroid.commons.LogUtils;
 import com.zc.githubdroid.components.FooterView;
+import com.zc.githubdroid.github.hotrepo.repolist.model.Repo;
 import com.zc.githubdroid.github.hotrepo.repolist.view.RepoListView;
 
 import java.util.ArrayList;
@@ -44,30 +47,52 @@ public class HotRepoListFragment extends Fragment implements RepoListView {
 
     private RepoListPresenter presenter;
     private ArrayAdapter<String> adapter;
+    private RepoListAdapter repoListAdapter;//仓库列表适配器
     private FooterView footerView;//尾部的布局
+    private static final String KEY_LANGUAGE = "key_language";
+    private ActivityUtils activityUtils;
+
+    //单例 ——进行传递数据
+    public static HotRepoListFragment getInstance(Language language){
+        HotRepoListFragment hotRepoListFragment = new HotRepoListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY_LANGUAGE, language);
+        hotRepoListFragment.setArguments(bundle);//数据设置到HotRepoListFragment上
+        return hotRepoListFragment;
+    }
+
+    //获得传递的数据
+    private Language getlanguage(){
+        //得到getArguments 获得序列化的数
+        return (Language) getArguments().getSerializable(KEY_LANGUAGE);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_repo_list, container, false);
+        activityUtils = new ActivityUtils(this);
         ButterKnife.bind(this, view);
         return view;
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        presenter = new RepoListPresenter(this);
+        presenter = new RepoListPresenter(this,getlanguage());//获得数据
 
         //初始添加数据
-        data = new ArrayList<>();
+        /*data = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             data.add("测试数据"+i);
-        }
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,data);
+        }*/
+//        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1);
+
+        repoListAdapter = new RepoListAdapter();
 
         //判断适配器是否空的，有没有数据
-        if (adapter.getCount()==0){
+        if (repoListAdapter.getCount()==0){
             ptrFrameLayout.postDelayed(new Runnable() {//延时刷新
                 @Override public void run() {
                     ptrFrameLayout.autoRefresh();//自动刷新
@@ -86,7 +111,7 @@ public class HotRepoListFragment extends Fragment implements RepoListView {
         initLoadMore();
 
         lvRepos.addFooterView(footerView);//将尾部视图添加到Listview上
-        lvRepos.setAdapter(adapter);//设置适配器
+        lvRepos.setAdapter(repoListAdapter);//设置适配器
         lvRepos.removeFooterView(footerView);//移除视图
     }
 
@@ -164,10 +189,11 @@ public class HotRepoListFragment extends Fragment implements RepoListView {
      */
 
 //    拿到刷新得到数据
-    @Override public void refreshData(List<String> list) {
-        data.clear();//刷新后将之前的数据进行清空
-        data.addAll(list);//得到所有的数据
-        adapter.notifyDataSetChanged();
+    @Override public void refreshData(List<Repo> list) {
+       /* data.clear();//刷新后将之前的数据进行清空
+        data.addAll(list);//得到所有的数据*/
+        repoListAdapter.addAll(list);
+        repoListAdapter.notifyDataSetChanged();
     }
 
 //    显示刷新的视图
@@ -196,8 +222,11 @@ public class HotRepoListFragment extends Fragment implements RepoListView {
         errorView.setVisibility(View.VISIBLE);//加载失败显示
     }
 
-
-
+    //显示吐司（通知）
+    @Override
+    public void showMessage(String msg) {
+        activityUtils.showToast(msg);
+    }
 
 
     //上拉加载视图分析
@@ -236,9 +265,9 @@ public class HotRepoListFragment extends Fragment implements RepoListView {
 
 //    4.加载完成，拿到数据进行视图更新
     @Override
-    public void addLoadDota(List<String> list) {
-        data.addAll(list);
-        adapter.notifyDataSetChanged();
+    public void addLoadDota(List<Repo> list) {
+        repoListAdapter.addAll(list);
+        repoListAdapter.notifyDataSetChanged();
 
     }
 
