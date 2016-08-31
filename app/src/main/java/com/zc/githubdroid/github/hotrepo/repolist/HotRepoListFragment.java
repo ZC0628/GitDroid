@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.zc.githubdroid.commons.LogUtils;
 import com.zc.githubdroid.components.FooterView;
 import com.zc.githubdroid.github.hotrepo.repolist.model.Repo;
 import com.zc.githubdroid.github.hotrepo.repolist.view.RepoListView;
+import com.zc.githubdroid.github.repoInfo.RepoInfoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +93,14 @@ public class HotRepoListFragment extends Fragment implements RepoListView {
 
         repoListAdapter = new RepoListAdapter();
 
+        //点击某一条跳转到详情页
+        lvRepos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Repo repo = (Repo) repoListAdapter.getItem(position);
+                RepoInfoActivity.open(getContext(), repo);
+            }
+        });
         //判断适配器是否空的，有没有数据
         if (repoListAdapter.getCount()==0){
             ptrFrameLayout.postDelayed(new Runnable() {//延时刷新
