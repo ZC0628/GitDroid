@@ -1,6 +1,7 @@
 package com.zc.githubdroid.network;
 
 import com.zc.githubdroid.github.hotrepo.repolist.model.RepoResult;
+import com.zc.githubdroid.github.hotuser.HotUserResult;
 import com.zc.githubdroid.github.repoInfo.RepoContentResult;
 import com.zc.githubdroid.login.model.AccessToken;
 import com.zc.githubdroid.login.model.User;
@@ -100,8 +101,8 @@ public interface GithubApi {
      * @param pageId 查询页数
      * @return
      */
-//    @GET("/search/users")
-//    Call<HotUserResult> searchUsers(@Query("q")String query,@Query("page")int pageId);
+    @GET("/search/users")
+    Call<HotUserResult> searchUsers(@Query("q")String query,@Query("page")int pageId);
 
 
 }

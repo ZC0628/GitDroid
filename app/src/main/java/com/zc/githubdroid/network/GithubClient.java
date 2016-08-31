@@ -2,6 +2,7 @@ package com.zc.githubdroid.network;
 
 
 import com.zc.githubdroid.github.hotrepo.repolist.model.RepoResult;
+import com.zc.githubdroid.github.hotuser.HotUserResult;
 import com.zc.githubdroid.github.repoInfo.RepoContentResult;
 import com.zc.githubdroid.login.model.AccessToken;
 import com.zc.githubdroid.login.model.User;
@@ -80,9 +81,9 @@ public class GithubClient implements GithubApi{
         return githubApi.markDown(body);
     }
 
-//    @Override
-//    public Call<HotUserResult> searchUsers(@Query("q") String query, @Query("page") int pageId) {
-//        return githubApi.searchUsers(query, pageId);
-//    }
+    @Override
+    public Call<HotUserResult> searchUsers(@Query("q") String query, @Query("page") int pageId) {
+        return githubApi.searchUsers(query, pageId);
+    }
 
 }
