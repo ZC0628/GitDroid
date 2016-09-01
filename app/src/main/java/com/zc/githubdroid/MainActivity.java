@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 import com.zc.githubdroid.commons.ActivityUtils;
+import com.zc.githubdroid.commons.LogUtils;
 import com.zc.githubdroid.github.hotrepo.HotRepoFragment;
 import com.zc.githubdroid.github.hotuser.HotUserFragment;
 import com.zc.githubdroid.login.LoginActivity;
@@ -107,7 +108,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //有的话
         btLogin.setText(R.string.switch_account);
         //设置主页面的标题
-        getSupportActionBar().setTitle(UserRepo.getUser().getName());
+        getSupportActionBar().setTitle(UserRepo.getUser().getLogin());
+        LogUtils.d("名字"+UserRepo.getUser().getName());
 
         //设置用户头像  用picasso获取图片路径
         Picasso.with(this).load(UserRepo.getUser().getAvatar()).into(ivIcon);

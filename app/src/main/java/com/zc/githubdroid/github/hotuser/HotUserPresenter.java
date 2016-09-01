@@ -12,7 +12,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by 123 on 2016/8/30.
+ *  业务处理：开发者刷新和加载的数据处理
  */
 public class HotUserPresenter {
 

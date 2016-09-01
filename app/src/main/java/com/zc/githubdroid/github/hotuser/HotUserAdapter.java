@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by 123 on 2016/8/30.
+ *  开发者页面适配器
  */
 public class HotUserAdapter extends BaseAdapter {
 

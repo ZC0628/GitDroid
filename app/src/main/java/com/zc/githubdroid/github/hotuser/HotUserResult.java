@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * Created by 123 on 2016/8/30.
+ *
  */
 public class HotUserResult {
     /**

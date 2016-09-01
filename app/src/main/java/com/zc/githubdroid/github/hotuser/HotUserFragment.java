@@ -28,7 +28,7 @@ import in.srain.cube.views.ptr.header.StoreHouseHeader;
 
 
 /**
- *
+ *      开发者页面
  */
 public class HotUserFragment extends Fragment implements HotUserPresenter.HotUserView{
 
