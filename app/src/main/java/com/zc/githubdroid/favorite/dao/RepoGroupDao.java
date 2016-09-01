@@ -1,9 +1,5 @@
 package com.zc.githubdroid.favorite.dao;
 
-/**
- * Created by 123 on 2016/8/31.
- */
-
 
 import com.j256.ormlite.dao.Dao;
 import com.zc.githubdroid.favorite.model.RepoGroup;

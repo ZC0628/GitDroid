@@ -13,7 +13,6 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * Created by 123 on 2016/8/31.
  *      仓库类别表
  */
 

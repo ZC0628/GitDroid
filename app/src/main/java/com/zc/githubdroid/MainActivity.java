@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 import com.zc.githubdroid.commons.ActivityUtils;
 import com.zc.githubdroid.commons.LogUtils;
+import com.zc.githubdroid.favorite.FavoriteFragment;
 import com.zc.githubdroid.github.hotrepo.HotRepoFragment;
 import com.zc.githubdroid.github.hotuser.HotUserFragment;
 import com.zc.githubdroid.login.LoginActivity;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // 热门仓库Fragment
     private HotRepoFragment hotRepoFragment;
     private HotUserFragment hotUserFragment;
+    private FavoriteFragment favoriteFragment;//我的收藏
     private Button btLogin;//登录按钮
     private ImageView ivIcon;//用户的头像
     private ActivityUtils activityUtils;
@@ -149,7 +151,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             // 我的收藏
             case R.id.arsenal_my_repo:
-                //TODO 收藏
+                //我的收藏
+                if(favoriteFragment == null){
+                    favoriteFragment = new FavoriteFragment();
+                }
+                if (!favoriteFragment.isAdded()) {
+                    replaceFragment(favoriteFragment);
+                }
+
                 break;
             // 每日干货
             case R.id.tips_daily:
