@@ -36,7 +36,7 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
 
     private RepoGroupDao repoGroupDao;
     private LocalRepoDao localRepoDao;
-//    private FavoriteAdapter adapter;
+    private FavoriteAdapter adapter;
     private int currentRepoGroupId;
 
     @Override
@@ -57,11 +57,11 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-//        adapter = new FavoriteAdapter();
-//        listView.setAdapter(adapter);
+        adapter = new FavoriteAdapter();
+        listView.setAdapter(adapter);
 
         //默认显示的是全部的数据
-//        setData(R.id.repo_group_all);
+        setData(R.id.repo_group_all);
     }
 
     @OnClick(R.id.btnFilter)
@@ -101,21 +101,23 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
         tvGroupType.setText(item.getTitle().toString());
         //根据我们点击的仓库类别的id去获取不同的类别仓库信息
         currentRepoGroupId = item.getItemId();
-//        setData(currentRepoGroupId);
+        setData(currentRepoGroupId);
         return true;
     }
 
-//    private void setData(int groupId) {
-//        switch (groupId){
-//            case R.id.repo_group_all:
-//                adapter.setData(localRepoDao.queryAll());
-//                break;
-//            case R.id.repo_group_no:
-//                adapter.setData(localRepoDao.queryNoGroup());
-//                break;
-//            default:
-//                adapter.setData(localRepoDao.queryForGroupId(currentRepoGroupId));
-//                break;
-//        }
-//    }
+
+    private void setData(int groupId) {
+        switch (groupId){
+            case R.id.repo_group_all://全部
+                adapter.setData(localRepoDao.queryAll());//到本地仓库表查询所有的
+                break;
+            case R.id.repo_group_no://未分类
+                adapter.setData(localRepoDao.queryNoGroup());
+                break;
+            default:
+                //通过ID来查询（网络连接...）
+                adapter.setData(localRepoDao.queryForGroupId(currentRepoGroupId));
+                break;
+        }
+    }
 }
