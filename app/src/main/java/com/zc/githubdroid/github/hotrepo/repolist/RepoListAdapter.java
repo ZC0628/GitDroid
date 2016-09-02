@@ -47,7 +47,7 @@ public class RepoListAdapter extends BaseAdapter{
     }
 
     @Override
-    public Object getItem(int position) {
+    public Repo getItem(int position) {
         return datas.get(position);
     }
 
@@ -69,7 +69,7 @@ public class RepoListAdapter extends BaseAdapter{
         viewHolder.tvRepoInfo.setText(repo.getDescription());
         viewHolder.tvRepoStars.setText(repo.getStarCount()+"");
         //获取头像地址
-        ImageLoader.getInstance().displayImage(repo.getOwner().getAvatar(),viewHolder.ivIcon);
+        ImageLoader.getInstance().displayImage(repo.getOwner().getAvatar(), viewHolder.ivIcon);
         return convertView;
     }
 

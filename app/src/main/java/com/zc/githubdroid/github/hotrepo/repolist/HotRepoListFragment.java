@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mugen.Mugen;
 import com.mugen.MugenCallbacks;
@@ -18,6 +19,10 @@ import com.zc.githubdroid.R;
 import com.zc.githubdroid.commons.ActivityUtils;
 import com.zc.githubdroid.commons.LogUtils;
 import com.zc.githubdroid.components.FooterView;
+import com.zc.githubdroid.favorite.dao.DBHelp;
+import com.zc.githubdroid.favorite.dao.LocalRepoDao;
+import com.zc.githubdroid.favorite.model.LocalRepo;
+import com.zc.githubdroid.favorite.model.RepoConverter;
 import com.zc.githubdroid.github.hotrepo.repolist.model.Repo;
 import com.zc.githubdroid.github.hotrepo.repolist.view.RepoListView;
 import com.zc.githubdroid.github.repoInfo.RepoInfoActivity;
@@ -48,7 +53,7 @@ public class HotRepoListFragment extends Fragment implements RepoListView {
     private List<String> data;
 
     private RepoListPresenter presenter;
-    private ArrayAdapter<String> adapter;
+//    private ArrayAdapter<String> adapter;
     private RepoListAdapter repoListAdapter;//仓库列表适配器
     private FooterView footerView;//尾部的布局
     private static final String KEY_LANGUAGE = "key_language";
@@ -101,6 +106,27 @@ public class HotRepoListFragment extends Fragment implements RepoListView {
                 RepoInfoActivity.open(getContext(), repo);
             }
         });
+
+        //长按收藏
+        lvRepos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+            /**
+            1.检测长按的Listview数据
+            2.将数据添加到本地仓库数据库表中
+            3.Dao里面需要传入的是LocalRepo
+            4.Repo 仓库类  LocalRepo本地仓库类 要做的：将Repo转换成LocalRepo
+             */
+             Repo repo = repoListAdapter.getItem(position);
+                LocalRepo convert = RepoConverter.convert(repo);//传入仓库返回的是本地仓库
+                new LocalRepoDao(DBHelp.getInstance(getContext())).createOrUpdate(convert);//需要传人的是本地仓库类LocalRepo
+                activityUtils.showToast("收藏成功！");
+                return false;
+            }
+        });
+
+
         //判断适配器是否空的，有没有数据
         if (repoListAdapter.getCount()==0){
             ptrFrameLayout.postDelayed(new Runnable() {//延时刷新

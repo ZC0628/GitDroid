@@ -188,7 +188,7 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int id = item.getItemId();//点击哪一项Item的ID
-        if ( id == R.id.delete) {//点击的是不是删除的ID
+        if ( id == R.id.delete) {//点击的 是不是删除的ID
             //删除作用的仓库
             localRepoDao.delete(currentlocalRepo);//这个里面是要操作的仓库
             //重置数据
