@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupMenu;
@@ -20,6 +21,7 @@ import com.zc.githubdroid.R;
 import com.zc.githubdroid.favorite.dao.DBHelp;
 import com.zc.githubdroid.favorite.dao.LocalRepoDao;
 import com.zc.githubdroid.favorite.dao.RepoGroupDao;
+import com.zc.githubdroid.favorite.model.LocalRepo;
 import com.zc.githubdroid.favorite.model.RepoGroup;
 
 import java.util.List;
@@ -41,6 +43,7 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
     private LocalRepoDao localRepoDao;
     private FavoriteAdapter adapter;
     private int currentRepoGroupId;
+    private LocalRepo currentlocalRepo;//当前操作的本地仓库
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -148,6 +151,20 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
         super.onCreateContextMenu(menu, v, menuInfo);
         //是不是展示在Listview上
         if(v.getId() == R.id.listView){
+            /**
+             * 使用ContextMenuInfo实现类完成我们选择的仓库获取
+             * position  利用adapter来获取我们当前作用的仓库
+             *
+             */
+        //基本的menuInfo就在adapterContextMenuInfo中实现
+            AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            int position = adapterContextMenuInfo.position;//获得位置
+            //获取当前操作的本地仓库
+            currentlocalRepo = adapter.getItem(position);
+
+
+
+
             //用菜单填充器将menu填充到ContextMenu
             MenuInflater menuInflater = getActivity().getMenuInflater();//得到菜单填充器
             menuInflater.inflate(R.menu.menu_context_favorite,menu);//menu,填充到上下文菜单上
@@ -170,9 +187,31 @@ public class FavoriteFragment extends Fragment implements PopupMenu.OnMenuItemCl
     //监听点击的菜单哪一项
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
-
-
+        int id = item.getItemId();//点击哪一项Item的ID
+        if ( id == R.id.delete) {//点击的是不是删除的ID
+            //删除作用的仓库
+            localRepoDao.delete(currentlocalRepo);//这个里面是要操作的仓库
+            //重置数据
+            setData(currentRepoGroupId);
+            return true;
+        }
+        //移动至中的ID
+        int groupID = item.getGroupId();
+        if(groupID == R.id.menu_group_move){
+         //移动的操作.未分类/网络连接 （数据库中获取）
+        if(id == R.id.repo_group_no){//未分类
+        //将我们作用的仓库类别改为未分类，也就是类别为null
+        currentlocalRepo.setRepoGroup(null);
+        }else{
+            //得到我们点击的是哪一个类别，将我们当前的仓库类别改为当前点击的类别
+            RepoGroup repoGroup = repoGroupDao.queryForId(id);//根据ID查询当前类别
+        currentlocalRepo.setRepoGroup(repoGroup);//
+        }
+        //数据库的更新
+         localRepoDao.createOrUpdate(currentlocalRepo);
+        setData(currentRepoGroupId);//数据重新获取
+        return true;
+        }
         return super.onContextItemSelected(item);
     }
 }

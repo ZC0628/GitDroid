@@ -70,6 +70,14 @@ public class LocalRepo {
     //仓库类别表
     private RepoGroup repoGroup;
 
+    public RepoGroup getRepoGroup() {
+        return repoGroup;
+    }
+
+    public void setRepoGroup(RepoGroup repoGroup) {
+        this.repoGroup = repoGroup;
+    }
+
     public int getId() {
         return id;
     }
