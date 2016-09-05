@@ -30,9 +30,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- *
+ *      每日干货
  */
-public class GankFragment extends Fragment {
+public class GankFragment extends Fragment implements GankPresenter.GankView{
 
     @BindView(R.id.tvDate)
     TextView tvDate;
@@ -47,8 +47,8 @@ public class GankFragment extends Fragment {
     private SimpleDateFormat simpleDateFormat;//时间格式规范处理
     private Calendar calendar;//年月日的形式（日历类）
 
-//    private GankPresenter gankPresenter;
-//    private GankAdapter adapter;
+    private GankPresenter gankPresenter;
+    private GankAdapter adapter;
 
     private ActivityUtils activityUtils;
 
@@ -59,7 +59,7 @@ public class GankFragment extends Fragment {
         calendar = Calendar.getInstance(Locale.CHINA);//以中文形式进行展示
         //获取当前的时间
         date = new Date(System.currentTimeMillis());
-//        gankPresenter = new GankPresenter(this);
+        gankPresenter = new GankPresenter(this);
     }
 
     @Nullable
@@ -76,17 +76,18 @@ public class GankFragment extends Fragment {
         //规范我们日期格式
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINA);
         tvDate.setText(simpleDateFormat.format(date));
-//        adapter = new GankAdapter();
-//        content.setAdapter(adapter);
-//        content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String url = adapter.getItem(position).getUrl();
-//                activityUtils.startBrowser(url);
-//            }
-//        });
+        adapter = new GankAdapter();
+        content.setAdapter(adapter);
+        //item的点击跳转网址
+        content.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String url = adapter.getItem(position).getUrl();//item点击的网址
+                activityUtils.startBrowser(url);//跳转浏览器
+            }
+        });
 
-//        gankPresenter.getGanks(date);
+        gankPresenter.getGanks(date);
     }
 
     //显示时间控件
@@ -109,30 +110,34 @@ public class GankFragment extends Fragment {
             date = calendar.getTime();
             tvDate.setText(simpleDateFormat.format(date));//当前新的选择时间设置上去
             //更新了日期，重新执行业务，重载加载数据
-//            gankPresenter.getGanks(date);
+            gankPresenter.getGanks(date);
         }
     };
 
-//    @Override
-//    public void setData(List<GankItem> list) {
-//        adapter.setDatas(list);
-//        adapter.notifyDataSetChanged();
-//    }
-//
-//    @Override
-//    public void showEmptyView() {
-//        emptyView.setVisibility(View.VISIBLE);
-//        content.setVisibility(View.GONE);
-//    }
-//
-//    @Override
-//    public void showMessage(String msg) {
-//        activityUtils.showToast(msg);
-//    }
-//
-//    @Override
-//    public void hideEmptyView() {
-//        emptyView.setVisibility(View.GONE);
-//        content.setVisibility(View.VISIBLE);
-//    }
+//    1. 设置数据
+    @Override
+    public void setData(List<GankItem> list) {
+        adapter.setDatas(list);
+        adapter.notifyDataSetChanged();
+    }
+
+//    2. 显示空视图
+    @Override
+    public void showEmptyView() {
+        emptyView.setVisibility(View.VISIBLE);//
+        content.setVisibility(View.GONE);//Listview隐藏
+    }
+
+//    3. 显示信息
+    @Override
+    public void showMessage(String msg) {
+        activityUtils.showToast(msg);
+    }
+
+//    4. 隐藏空视图
+    @Override
+    public void hideEmptyView() {
+        emptyView.setVisibility(View.GONE);
+        content.setVisibility(View.VISIBLE);
+    }
 }

@@ -26,7 +26,7 @@ public interface GankApi {
 
      htpp://baidu.com/zzz/image
      */
-    String BASE_URL = "http://gank.io/api";//地址
+    String BASE_URL = "http://gank.io/api/";//地址
 
     /**
      * 请求每日数据的api
@@ -35,8 +35,8 @@ public interface GankApi {
      * @param day
      * @return
      */
-    @GET("/day/{year}/{month}/{day}")
+    @GET("day/{year}/{month}/{day}")
     Call<GankResult> getDailyData
-    (@Path("yaer") int year, @Path("month") int month, @Path("day") int day);//路径
+    (@Path("year") int year, @Path("month") int month, @Path("day") int day);//路径
 
 }

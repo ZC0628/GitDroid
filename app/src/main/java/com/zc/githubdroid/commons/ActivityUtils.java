@@ -137,6 +137,7 @@ public class ActivityUtils {
         }
     }
 
+    //跳转浏览器
     public void startBrowser(String url){
         if (getActivity() == null) return;
         Intent intent = new Intent();

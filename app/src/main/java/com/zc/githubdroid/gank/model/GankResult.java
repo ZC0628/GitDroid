@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by 123 on 2016/9/1.
  *      数据模型——干货结果
  */
 public class GankResult {
@@ -14,6 +13,8 @@ public class GankResult {
 
     private boolean error;//错误
 
+    //名字与Gson字符串不一样时要做序列化转变
+    @SerializedName("results")
     private Result result;//结果
 
     public List<String> getCategory() {
