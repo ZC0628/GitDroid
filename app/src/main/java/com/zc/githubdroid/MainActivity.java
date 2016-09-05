@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import com.zc.githubdroid.commons.ActivityUtils;
 import com.zc.githubdroid.commons.LogUtils;
 import com.zc.githubdroid.favorite.FavoriteFragment;
+import com.zc.githubdroid.gank.model.GankFragment;
 import com.zc.githubdroid.github.hotrepo.HotRepoFragment;
 import com.zc.githubdroid.github.hotuser.HotUserFragment;
 import com.zc.githubdroid.login.LoginActivity;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private HotRepoFragment hotRepoFragment;
     private HotUserFragment hotUserFragment;
     private FavoriteFragment favoriteFragment;//我的收藏
+    private GankFragment gankFragment;//，每日干货
     private Button btLogin;//登录按钮
     private ImageView ivIcon;//用户的头像
     private ActivityUtils activityUtils;
@@ -162,7 +164,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             // 每日干货
             case R.id.tips_daily:
-                //TODO 每日干货
+                if(gankFragment == null){
+                    gankFragment = new GankFragment();
+                }
+                if (!gankFragment.isAdded()) {
+                    replaceFragment(gankFragment);//没有添加就替换
+                }
                 break;
         }
         // 关闭drawerLayout  从左往右

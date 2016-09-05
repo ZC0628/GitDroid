@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Created by 123 on 2016/9/1.
- *      干货结果
+ *      数据模型——干货结果
  */
 public class GankResult {
 
